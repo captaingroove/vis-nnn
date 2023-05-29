@@ -12,20 +12,18 @@
 module = {}
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
-    --- TODO avoid -p- as selections disappear after a short while
-    ---      and copy/paste/move is not possible. Also, -p<file> doesn't
-    ---      work, as <file> is removed when exiting nnn.
 	--- TODO need to call curses functions: def_prog_mode(); endwin();
 	--- TODO need to hide the curses cursor after exiting nnn
-	--- TODO need to check if more than one file was selected
 	--- TODO need to handle more than one instance of vis running nnn
-    local file = io.popen("nnn -RuA -p-")
+    local pickfile_name = "/tmp/vis_nnn.pick"
+    os.execute(string.format("nnn -RuA -p %s", pickfile_name))
+    pickfile = io.open(pickfile_name)
     local output = {}
-    for line in file:lines() do
+    for line in pickfile:lines() do
         table.insert(output, line)
     end
-    local success, msg, status = file:close()
-    if status == 0 and output[1] ~= nil then
+    local success, msg, status = pickfile:close()
+    if success and output[1] ~= nil then
         vis:feedkeys(string.format(":e '%s'<Enter>", output[1]))
     end
     --- TODO need to call curses function: reset_prog_mode()
