@@ -1,19 +1,5 @@
--- Copyright (C) 2023  Jörg Bakker
---
--- This program is free software: you can redistribute it and/or modify
--- it under the terms of the GNU Affero General Public License as
--- published by the Free Software Foundation, either version 3 of the
--- License, or (at your option) any later version.
---
--- This program is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU Affero General Public License for more details.
---
--- You should have received a copy of the GNU Affero General Public License
--- along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+--- Copyright (C) 2023  Jörg Bakker
+---
 --- FIXME vis doesn't restore the terminal properly after exiting when 'nnn' has been called
 --- solutions:
 --- 1. 'e' alias for vis always appends a call to the clear(1) command
@@ -26,6 +12,9 @@
 module = {}
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
+    --- TODO avoid -p- as selections disappear after a short while
+    ---      and copy/paste/move is not possible. Also, -p<file> doesn't
+    ---      work, as <file> is removed when exiting nnn.
 	--- TODO need to call curses functions: def_prog_mode(); endwin();
 	--- TODO need to hide the curses cursor after exiting nnn
 	--- TODO need to check if more than one file was selected
