@@ -14,6 +14,7 @@ module = {}
 vis:command_register("nnn", function(argv, force, win, selection, range)
 	--- TODO need to call curses functions: def_prog_mode(); endwin();
 	--- TODO need to hide the curses cursor after exiting nnn
+	--- TODO make nnn options configurable
     local pickfile_name = os.tmpname()
     os.execute(string.format("nnn -RuA -p %s", pickfile_name))
     pickfile = io.open(pickfile_name)
