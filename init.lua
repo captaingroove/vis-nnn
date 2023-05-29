@@ -14,8 +14,7 @@ module = {}
 vis:command_register("nnn", function(argv, force, win, selection, range)
 	--- TODO need to call curses functions: def_prog_mode(); endwin();
 	--- TODO need to hide the curses cursor after exiting nnn
-	--- TODO need to handle more than one instance of vis running nnn
-    local pickfile_name = "/tmp/vis_nnn.pick"
+    local pickfile_name = os.tmpname()
     os.execute(string.format("nnn -RuA -p %s", pickfile_name))
     pickfile = io.open(pickfile_name)
     local output = {}
@@ -23,6 +22,7 @@ vis:command_register("nnn", function(argv, force, win, selection, range)
         table.insert(output, line)
     end
     local success, msg, status = pickfile:close()
+    os.remove(pickfile_name)
     if success and output[1] ~= nil then
         vis:feedkeys(string.format(":e '%s'<Enter>", output[1]))
     end
