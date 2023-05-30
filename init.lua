@@ -10,14 +10,22 @@
 ---    these new functions could be added to vis.h (also in lua vis module then ...?)
 --- FIXME also need to hide the cursor when leaving 'nnn' with curs_set(0)
 module = {}
+-- local curses = require("curses")
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
 	--- TODO need to call curses functions: def_prog_mode(); endwin();
 	--- TODO need to hide the curses cursor after exiting nnn
 	--- TODO make nnn options configurable
+	--- TODO avoid recursive calls of nnn (vis -> nnn -> vis -> nnn ...)
+	-- curses.def_prog_mode()
+	-- curses.endwin()
     local pickfile_name = os.tmpname()
     os.execute(string.format("nnn -RuA -p %s", pickfile_name))
-    pickfile = io.open(pickfile_name)
+    local pickfile = io.open(pickfile_name)
+    if not pickfile then
+	    vis:redraw()
+		return false
+    end
     local output = {}
     for line in pickfile:lines() do
         table.insert(output, line)
@@ -28,6 +36,7 @@ vis:command_register("nnn", function(argv, force, win, selection, range)
         vis:feedkeys(string.format(":e '%s'<Enter>", output[1]))
     end
     --- TODO need to call curses function: reset_prog_mode()
+    -- curses.reset_prog_mode()
     vis:redraw()
     return true;
 end, "Select file to open with nnn")
