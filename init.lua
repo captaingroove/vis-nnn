@@ -40,7 +40,7 @@ vis:command_register("nnn", function(argv, force, win, selection, range)
     if success and output[1] ~= nil then
         vis:feedkeys(string.format(":e '%s'<Enter>", output[1]))
     end
-    vis:redraw()
+    -- vis:redraw()
     return true;
 end, "Select file to open with nnn")
 
