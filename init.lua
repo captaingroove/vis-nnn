@@ -8,6 +8,8 @@
 --- As we also would need to execute shell calls to curses programs
 --- with the ':!' command, we probably would need to add a new
 --- command to the sam commands (sam.c)
+--- sam.c:
+---  add cmd_launch_fullscreen()
 ---
 --- The curses functions needed for terminal save/restore are:
 --- def_prog_mode(); endwin(); curs_set(1);
@@ -22,7 +24,7 @@ vis:command_register("nnn", function(argv, force, win, selection, range)
 
 	--- Better use the vis internal function to execute a shell command
 	--- as it handles terminal saving and restoring
-    vis:command(string.format(":!nnn -RuA -p %s", pickfile_name))
+    vis:command(string.format(":^nnn -RuA -p %s", pickfile_name))
     -- status = vis:pipe(vis.win.file, 0, 0, string.format("nnn -RuA -p %s", pickfile_name))
     -- os.execute(string.format("nnn -RuA -p %s", pickfile_name))
 
