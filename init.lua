@@ -1,8 +1,6 @@
 --- Copyright (C) 2023  Jörg Bakker
 ---
 --- FIXME vis doesn't restore the terminal properly after exiting when 'nnn' has been called.
---- We should introduce save_screen_state() and restore_screen_state() functions in vis.
---- For general curses test code, see: /home/jorg/cc/testlab/curses/leave_curses.c
 --- There already are functions ui_curses_save() and ui_curses_restore()
 --- which are used in vis_pipe() and do exactly this but setting the
 --- terminal to shell mode for the executed command
@@ -11,10 +9,12 @@
 --- with the ':!' command, we probably would need to add a new
 --- command to the sam commands (sam.c)
 ---
---- TODO need to call curses functions: def_prog_mode(); endwin();
---- TODO need to call curses function: reset_prog_mode() and
----      hide the curses cursor after exiting nnn
+--- The curses functions needed for terminal save/restore are:
+--- def_prog_mode(); endwin(); curs_set(1);
+--- reset_prog_mode(); curs_set(1);
+---
 --- TODO make nnn options configurable
+---
 module = {}
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
