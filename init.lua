@@ -6,6 +6,11 @@
 --- There already are functions ui_curses_save() and ui_curses_restore()
 --- which are used in vis_pipe() and do exactly this but setting the
 --- terminal to shell mode for the executed command
+---
+--- As we also would need to execute shell calls to curses programs
+--- with the ':!' command, we probably would need to add a new
+--- command to the sam commands (sam.c)
+---
 --- TODO need to call curses functions: def_prog_mode(); endwin();
 --- TODO need to call curses function: reset_prog_mode() and
 ---      hide the curses cursor after exiting nnn
