@@ -1,16 +1,13 @@
 --- Copyright (C) 2023  Jörg Bakker
 ---
---- FIXME vis doesn't restore the terminal properly after exiting when 'nnn' has been called.
+--- vis doesn't restore the terminal properly after exiting when 'nnn' has been called.
 --- There already are functions ui_curses_save() and ui_curses_restore()
 --- which are used in vis_pipe() and do exactly this but setting the
 --- terminal to shell mode for the executed command
 ---
---- As we also would need to execute shell calls to curses programs
---- with the ':!' command, we probably would need to add a new
---- command to the sam commands (sam.c)
---- sam.c:
----  add cmd_launch_fullscreen()
----
+--- As we also would need to execute shell calls to curses programs with the ':!' command,
+--- I added the new command '^' to the sam commands (sam.c) that restores the terminal
+--- correctly after executing a curses program.
 --- The curses functions needed for terminal save/restore are:
 --- def_prog_mode(); endwin(); curs_set(1);
 --- reset_prog_mode(); curs_set(1);
