@@ -21,9 +21,7 @@ vis:command_register("nnn", function(argv, force, win, selection, range)
 
 	--- Better use the vis internal function to execute a shell command
 	--- as it handles terminal saving and restoring
-    vis:command(string.format(":^nnn -RuA -p %s", pickfile_name))
-    -- status = vis:pipe(vis.win.file, 0, 0, string.format("nnn -RuA -p %s", pickfile_name))
-    -- os.execute(string.format("nnn -RuA -p %s", pickfile_name))
+    local status = vis:pipe(nil, nil, string.format("nnn -RuA -p %s", pickfile_name), true)
 
     local pickfile = io.open(pickfile_name)
     if not pickfile then
