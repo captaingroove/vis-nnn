@@ -1,6 +1,7 @@
 --- Copyright (C) 2023  Jörg Bakker
 ---
-module = {}
+
+local module = {}
 module.nnn_args = ""
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
