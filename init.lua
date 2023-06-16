@@ -2,6 +2,7 @@
 ---
 
 local module = {}
+module.nnn_path = "nnn"
 module.nnn_args = ""
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
