@@ -6,11 +6,7 @@ module.nnn_args = ""
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
     local pickfile_name = os.tmpname()
-
-	--- Better use the vis internal function to execute a shell command
-	--- as it handles terminal saving and restoring
     local status = vis:pipe(nil, nil, string.format("nnn " .. module.nnn_args .. " -p %s", pickfile_name), true)
-
     local pickfile = io.open(pickfile_name)
     if not pickfile then
 	    vis:redraw()
@@ -25,7 +21,6 @@ vis:command_register("nnn", function(argv, force, win, selection, range)
     if success and output[1] ~= nil then
         vis:feedkeys(string.format(":e '%s'<Enter>", output[1]))
     end
-    -- vis:redraw()
     return true;
 end, "Select file to open with nnn")
 
