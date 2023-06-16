@@ -1,6 +1,9 @@
 # Use nnn as a file picker
 
 Use [nnn](https://github.com/jarun/nnn) as a file picker for [vis](https://github.com/martanne/vis).
+To work properly, this plugin currently needs two patches for vis:
+
+https://github.com/martanne/vis/pull/1104 and https://github.com/martanne/vis/pull/1105
 
 ## Usage
 
