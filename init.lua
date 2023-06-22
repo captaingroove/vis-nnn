@@ -7,7 +7,8 @@ module.nnn_args = ""
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
     local pickfile_name = os.tmpname()
-    local status = vis:pipe(nil, nil, string.format(module.nnn_path .. " " .. module.nnn_args .. " -p %s", pickfile_name), true)
+    local command = string.format(module.nnn_path .. " " .. module.nnn_args .. " -p %s", pickfile_name)
+	local status = vis:pipe(win.file, {start = 1, finish = 0}, command, true)
     local pickfile = io.open(pickfile_name)
     if not pickfile then
 	    vis:redraw()
