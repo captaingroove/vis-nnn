@@ -1,9 +1,7 @@
 # Use nnn as a file picker
 
 Use [nnn](https://github.com/jarun/nnn) as a file picker for [vis](https://github.com/martanne/vis).
-To work properly without trashing the terminal after exiting vis, this plugin currently needs the following patch:
-
-https://github.com/martanne/vis/pull/1105
+To work properly without trashing the terminal after exiting vis this plugin needs at least commit 47ac03a911eff0f743d1ee45efc51fc8f68dcbb8 of vis.
 
 ## Usage
 
