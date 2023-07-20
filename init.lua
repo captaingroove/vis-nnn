@@ -28,9 +28,12 @@ end
 vis:command_register("nnn", function(argv, force, win, selection, range)
 	local files = module.nnn()
 	if files and files[1] ~= nil then
-		vis:command("e " .. files[1])
+		local file = table.remove(files, 1)
+		vis:command("e " .. file)
 	end
-	return true;
-end, "Select file to open with nnn")
+	for _, file in pairs(files) do
+		vis:command("open " .. file)
+	end
+end, "Select file(s) to open with nnn")
 
 return module
