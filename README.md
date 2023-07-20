@@ -28,4 +28,12 @@ plugin_vis_nnn.nnn_args = "-RuA"
 vis.events.subscribe(vis.events.INIT, function()
     vis:map(vis.modes.NORMAL, " n", ":nnn<Enter>", "run nnn filemanager in current dir")
 end)
+
+-- Get a list of files with exported nnn() function
+local myfunc = function()
+	local files = plugin_vis_nnn.nnn()
+	for _, file in pairs(files) do
+		-- do something with file
+	end
+end
 ```
