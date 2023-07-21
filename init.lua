@@ -5,25 +5,35 @@ local module = {}
 module.nnn_path = "nnn"
 module.nnn_args = ""
 
-vis:command_register("nnn", function(argv, force, win, selection, range)
+module.nnn = function()
 	local pickfile_name = os.tmpname()
-	local command = string.format(module.nnn_path .. " " .. module.nnn_args .. " -p %s", pickfile_name)
-	local status = vis:pipe(win.file, {start = 1, finish = 0}, command, true)
+	local command = module.nnn_path .. " " .. module.nnn_args .. " -p " .. pickfile_name
+	local status = vis:pipe(vis.win.file, {start = 1, finish = 0}, command, true)
 	local pickfile = io.open(pickfile_name)
 	if not pickfile then
 		vis:redraw()
-		return false
+		return
 	end
-	local output = {}
+	local files  = {}
 	for line in pickfile:lines() do
-		table.insert(output, line)
+		table.insert(files, line)
 	end
 	local success, msg, status = pickfile:close()
 	os.remove(pickfile_name)
-	if success and output[1] ~= nil then
-		vis:feedkeys(string.format(":e '%s'<Enter>", output[1]))
+	if success then
+		return files
 	end
-	return true;
-end, "Select file to open with nnn")
+end
+
+vis:command_register("nnn", function(argv, force, win, selection, range)
+	local files = module.nnn()
+	if files and files[1] ~= nil then
+		local file = table.remove(files, 1)
+		vis:command("e " .. file)
+	end
+	for _, file in pairs(files) do
+		vis:command("open " .. file)
+	end
+end, "Select file(s) to open with nnn")
 
 return module
