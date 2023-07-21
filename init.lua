@@ -12,17 +12,15 @@ module.nnn = function()
 	local pickfile = io.open(pickfile_name)
 	if not pickfile then
 		vis:redraw()
-		return
+		return nil
 	end
 	local files  = {}
 	for line in pickfile:lines() do
 		table.insert(files, line)
 	end
-	local success, msg, status = pickfile:close()
+	pickfile:close()
 	os.remove(pickfile_name)
-	if success then
-		return files
-	end
+	return files
 end
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
