@@ -25,6 +25,7 @@ end
 
 vis:command_register("nnn", function(argv, force, win, selection, range)
 	local files = module.nnn()
+	if not files then return end
 	if files and files[1] ~= nil then
 		local file = table.remove(files, 1)
 		vis:command("e " .. file)
